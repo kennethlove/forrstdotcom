@@ -97,9 +97,10 @@ def quote(inp, nick='', chan='', db=None):
     return format_quote(selected_quote, num, n_quotes)
 
 
+"""
 @hook.command('qdel', adminonly=True)
 @hook.command
-def quotedelete:
+def quotedelete(inp):
     ".qdel/.quotedelete [#chan] [nick] <#n>/.quote add <nick> <msg> -- deletes " \
         "<#n>th quote by <nick> or from <#chan> (adminonly)"
 
@@ -139,4 +140,4 @@ def quotedelete:
         selected_quote = quotes[num - 1]
 
     return format_quote(selected_quote, num, n_quotes)
-
+"""
