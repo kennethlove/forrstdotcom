@@ -7,6 +7,7 @@ from util import hook, urlnorm, timesince
 url_re = r'([a-zA-Z]+://|www\.)[^ ]+'
 
 expiration_period = 60 * 60 * 24  # 1 day
+minimum_time_lag = 300 # 5 minutes
 
 ignored_urls = [urlnorm.normalize("http://google.com")]
 
@@ -45,6 +46,10 @@ def format_reply(history):
 
     last_nick, recent_time = history[0]
     last_time = timesince.timesince(recent_time)
+    current_time = time.time()
+
+    if (current_time - recent_time < minimum_time_lag):
+        return
 
     if len(history) == 1:
         return "%s linked that %s ago." % (last_nick, last_time)
