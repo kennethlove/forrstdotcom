@@ -52,7 +52,7 @@ def format_reply(history):
         return
 
     if len(history) == 1:
-        return "%s linked that %s ago." % (last_nick, last_time)
+        return "%s linked that %s ago. Pay attention, dumbass." % (last_nick, last_time)
 
     hour_span = math.ceil((time.time() - history[-1][1]) / 3600)
     hour_span = '%.0f hours' % hour_span if hour_span > 1 else 'hour'
