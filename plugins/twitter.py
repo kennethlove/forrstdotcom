@@ -7,7 +7,7 @@ import random
 import re
 from time import strptime, strftime
 
-from util import hook, http
+from util import hook, http, urlnorm
 
 
 def unescape_xml(string):
@@ -24,6 +24,9 @@ def unescape_xml(string):
 history = []
 history_max_size = 250
 
+@hook.regex(r'https?://twitter.com/(#!/)?([a-zA-Z]+)/status/(\d+)')
+def show_tweet(match, nick='', chan='', say=None):
+    say(twitter(match.group(3)))
 
 @hook.command
 def twitter(inp):
