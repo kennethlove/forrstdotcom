@@ -6,3 +6,9 @@ config
 pep8.py
 .project
 .pydevproject
+
+# Virtualenv files
+.Python
+bin
+include
+lib
