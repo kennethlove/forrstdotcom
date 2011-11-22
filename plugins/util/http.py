@@ -29,6 +29,15 @@ def get_html(*args, **kwargs):
     return html.fromstring(get(*args, **kwargs))
 
 
+# Returns a tuple containing the return value of html.fromstring in the first
+# index and the raw response object in the second index.
+def get_html_and_response(*args, **kwargs):
+    response = open(*args, **kwargs)
+    htmlobj  = html.fromstring(response.read())
+
+    return (htmlobj, response)
+
+
 def get_xml(*args, **kwargs):
     return etree.fromstring(get(*args, **kwargs))
 
