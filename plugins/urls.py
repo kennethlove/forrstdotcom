@@ -29,11 +29,12 @@ def show_title(match, nick='', chan='', say=None):
                     titleList = ''.join(titleList)
                     message   += ' | URL title: %s' % (''.join(titleList))
 
-        # Get the short URL.
-        short_url = http.get(is_gd % (url))
+        if len(url) >= 80:
+            # Get the short URL.
+            short_url = http.get(is_gd % (url))
 
-        # Cheap error checking
-        if 'error: please' not in short_url.lower():
-            message += ' | Short URL: %s' % (short_url)
+            # Cheap error checking
+            if 'error: please' not in short_url.lower():
+                message += ' | Short URL: %s' % (short_url)
 
         say(message)
