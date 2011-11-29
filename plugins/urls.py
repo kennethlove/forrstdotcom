@@ -11,7 +11,7 @@ def show_title(match, nick='', chan='', say=None):
     if not url in ignore and not nick in ignore:
         page, response = http.get_html_and_response(url)
         title          = page.xpath('//title')
-        message        = None
+        message        = ''
 
         # Only ignore URLs of which "twitter" or "youtube" is part of the
         # domain and not just part some some URI segment.
@@ -35,7 +35,12 @@ def show_title(match, nick='', chan='', say=None):
 
             # Cheap error checking
             if 'error: please' not in short_url.lower():
-                message += ' | Short URL: %s' % (short_url)
+                if message:
+                    message += ' | Short URL: %s'
+                else:
+                    message = 'Short URL: %s'
+
+                message = message % (short_url)
 
         if message:
             say(message)
