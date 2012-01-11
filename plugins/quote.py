@@ -55,7 +55,10 @@ def quote(inp, nick='', chan='', db=None):
             add_quote(db, chan, quoted_nick, nick, msg)
             db.commit()
         except db.IntegrityError:
-            return "message already stored, doing nothing."
+            if quoted_nick == 'davzie':
+                return ", davzie: have you not learned already?"
+            else:
+                return "message already stored, doing nothing."
         return "quote added."
     elif retrieve:
         select, num = retrieve.groups()
