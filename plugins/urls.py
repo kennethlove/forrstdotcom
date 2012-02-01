@@ -1,5 +1,4 @@
 import re
-import urllib
 from util import hook, urlnorm, http
 
 ignore = ['buttbot']
