@@ -3,7 +3,7 @@ from util    import hook, urlnorm, http
 from urllib2 import Request
 
 ignore       = ['buttbot']
-ignore_hosts = ['youtube.com', 'twitter.com']
+ignore_hosts = ['youtube.com', 'twitter.com', 'youtu.be']
 
 @hook.regex(r'([a-zA-Z]+://|www\.)[^ ]+')
 def show_title(match, nick='', chan='', say=None):
