@@ -1,7 +1,8 @@
 import re
 from util import hook, urlnorm, http
 
-ignore = ['buttbot']
+ignore       = ['buttbot']
+ignore_hosts = ['youtube.', 'twitter.']
 
 @hook.regex(r'([a-zA-Z]+://|www\.)[^ ]+')
 def show_title(match, nick='', chan='', say=None):
@@ -15,7 +16,7 @@ def show_title(match, nick='', chan='', say=None):
 
         # Only ignore URLs of which "twitter" or "youtube" is part of the
         # domain and not just part some some URI segment.
-        if 'youtube.' not in url and 'twitter.' not in url:
+        if url not in ignore_hosts:
             # Don't show the title if there isn't one
             if title:
                 titleList = []
@@ -27,7 +28,7 @@ def show_title(match, nick='', chan='', say=None):
 
                 if titleList:
                     titleList = ''.join(titleList)
-                    message   = 'URL title: %s' % (''.join(titleList))
+                    message   = 'URL title: %s' % (titleList)
 
         if len(url) >= 80:
             short_url = http.get(
