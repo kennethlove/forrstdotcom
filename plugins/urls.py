@@ -1,6 +1,8 @@
 import re
-from util    import hook, urlnorm, http
-from urllib2 import Request
+
+from BeautifulSoup import BeautifulSoup
+from util          import hook, urlnorm, http
+from urllib2       import Request
 
 ignore       = ['buttbot']
 ignore_hosts = ['youtube.com', 'twitter.com', 'youtu.be']
@@ -13,25 +15,16 @@ def show_title(match, nick='', chan='', say=None):
 
     if not nick in ignore:
         page, response = http.get_html_and_response(url)
-        title          = page.xpath('//title')
         message        = ''
 
-        # Only ignore URLs of which "twitter" or "youtube" is part of the
-        # domain and not just part some some URI segment.
         if host not in ignore_hosts:
-            # Don't show the title if there isn't one
+            parser = BeautifulSoup(response)
+            title  = parser.title.string.strip()
+
             if title:
-                titleList = []
-                short_url = 'Not Found'
+                message = 'URL title: %s' % (title)
 
-                for i in title:
-                    if i.text_content():
-                        titleList.append(i.text_content().strip())
-
-                if titleList:
-                    titleList = ''.join(titleList)
-                    message   = 'URL title: %s' % (titleList)
-
+        # Shorten URLs that are over 80 characters.
         if len(url) >= 80:
             short_url = http.get(
                 'http://is.gd/create.php',
