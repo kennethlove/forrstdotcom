@@ -1,22 +1,24 @@
 import re
-from util import hook, urlnorm, http
+from util    import hook, urlnorm, http
+from urllib2 import Request
 
 ignore       = ['buttbot']
-ignore_hosts = ['youtube.', 'twitter.']
+ignore_hosts = ['youtube.com', 'twitter.com']
 
 @hook.regex(r'([a-zA-Z]+://|www\.)[^ ]+')
 def show_title(match, nick='', chan='', say=None):
     matched = match.group().encode('utf-8')
     url     = urlnorm.normalize(matched)
+    host    = Request(url).get_host()
 
-    if not url in ignore and not nick in ignore:
+    if not nick in ignore:
         page, response = http.get_html_and_response(url)
         title          = page.xpath('//title')
         message        = ''
 
         # Only ignore URLs of which "twitter" or "youtube" is part of the
         # domain and not just part some some URI segment.
-        if url not in ignore_hosts:
+        if host not in ignore_hosts:
             # Don't show the title if there isn't one
             if title:
                 titleList = []
