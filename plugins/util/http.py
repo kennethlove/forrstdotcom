@@ -30,12 +30,13 @@ def get_html(*args, **kwargs):
 
 
 # Returns a tuple containing the return value of html.fromstring in the first
-# index and the raw response object in the second index.
+# index and the raw response body in the second index.
 def get_html_and_response(*args, **kwargs):
     response = open(*args, **kwargs)
-    htmlobj  = html.fromstring(response.read())
+    text     = response.read()
+    htmlobj  = html.fromstring(text)
 
-    return (htmlobj, response)
+    return (htmlobj, text)
 
 
 def get_xml(*args, **kwargs):
